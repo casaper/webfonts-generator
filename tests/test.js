@@ -6,7 +6,7 @@ var assert = require('assert')
 var sass = require('node-sass')
 var Q = require('q')
 var readChunk = require('read-chunk')
-var getFileType = require('file-type')
+var FileType = require('file-type')
 
 var webfontsGenerator = require('../src/index')
 
@@ -50,8 +50,10 @@ describe('webfont', function() {
 				var DETECTABLE = ['ttf', 'woff', 'woff2', 'eot']
 				if (_.contains(DETECTABLE, type)) {
 					var chunk = readChunk.sync(filepath, 0, 262)
-					var filetype = getFileType(chunk)
-					assert.equal(type, filetype && filetype.ext, 'ttf filetype is correct')
+					FileType.fromBuffer(chunk).then(filetype => {
+						console.log(filetype)
+						assert.equal(type, filetype && filetype.ext, 'ttf filetype is correct')
+					})
 				}
 			}
 
