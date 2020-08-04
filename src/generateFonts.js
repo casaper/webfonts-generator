@@ -2,7 +2,7 @@ var fs = require('fs')
 var _ = require('underscore')
 var Q = require('q')
 
-var svgicons2svgfont = require('svgicons2svgfont')
+var SVGIcons2SVGFontStream = require('svgicons2svgfont')
 var svg2ttf = require('svg2ttf')
 var ttf2woff = require('ttf2woff')
 var ttf2woff2 = require('ttf2woff2')
@@ -33,7 +33,7 @@ var generators = {
 
 			svgOptions.log = function(){}
 
-			var fontStream = svgicons2svgfont(svgOptions)
+			var fontStream = new SVGIcons2SVGFontStream(svgOptions)
 				.on('data', function(data) {
 					font = Buffer.concat([font, data])
 				})
